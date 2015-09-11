@@ -16,4 +16,5 @@ Required packages
 How to run
 ===========
 After proper configuration in categoricalClustDist.py.
+
 `python categoricalClustDist.py`
