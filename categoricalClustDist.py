@@ -13,7 +13,7 @@ import sys
 from scipy.spatial import distance
 from cvxopt import matrix, solvers
 
-def read_raw_data(cluster_result_file):
+def read_tokens(cluster_result_file):
 	"""read clustering result from csv file (only one record each row) to a list"""
 	with open(cluster_result_file,'rb') as csvfile:
 		filereader=csv.reader(csvfile,delimiter=',');
@@ -30,13 +30,12 @@ def cluster_info(clustering_result):
 	cluster_dict=dict(zip(cluster_set,range(cluster_num)));
 	return (cluster_num,cluster_dict)
 
-def file_to_mat(cluster_result_file):
-	clustering_result = read_raw_data(cluster_result_file);
-	cluster_num, cluster_dict = cluster_info(clustering_result);
-	N = len(clustering_result);
+def token_to_mat(tokens):
+	cluster_num, cluster_dict = cluster_info(tokens);
+	N = len(tokens);
 	clus_mat = np.zeros((N,cluster_num));
 	for i in xrange(N):
-		clus_mat[i][cluster_dict[clustering_result[i]]]=1;
+		clus_mat[i][cluster_dict[tokens[i]]]=1;
 	return clus_mat
 
 def categorical_clust_dist(clus_mat_A,clus_mat_B,method='even'):
@@ -75,17 +74,18 @@ def categorical_clust_dist(clus_mat_A,clus_mat_B,method='even'):
 	G = matrix(-1.0*np.eye(m*n),(m*n,m*n))
 	h = matrix(0,(m*n,1),'d')
 
+	solvers.options['show_progress'] = False
 	sol = solvers.lp(c,G,h,A=Aeq,b=beq);
 	x=sol['x'];
-	print sol
+	#print sol
 	x=np.array(x);
 	x=x.reshape(n,m)
 	return {"dist":sol['primal objective'],"matching":x}
 
 
 if __name__ == '__main__':
-	clus_mat_A = file_to_mat('cluster_resultsA.txt')
-	clus_mat_B = file_to_mat('cluster_resultsB.txt')
+	clus_mat_A = token_to_mat(read_tokens('cluster_resultsA.txt'))
+	clus_mat_B = token_to_mat(read_tokens('cluster_resultsB.txt'))
 	# print clus_mat_A,clus_mat_B
 	if clus_mat_A.shape[0]!=clus_mat_B.shape[0]:
 		print "number of instances in two clustering result are not the same!";
