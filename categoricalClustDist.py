@@ -7,7 +7,6 @@ Compute Categorical Cluster Distance
 #Copyright: Penn State University, 
 
 import csv
-from collections import Counter
 import numpy as np
 import sys
 from scipy.spatial import distance
