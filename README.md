@@ -12,7 +12,7 @@ Required packages
 Python version >= 2.7
 - [cvxopt](http://cvxopt.org) 
 - [numpy](http://www.numpy.org)
-- [scipy](http://www.numpy.org)
+- [scipy](http://www.scipy.org)
 
 How to run
 ===========
