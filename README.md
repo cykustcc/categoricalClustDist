@@ -9,6 +9,7 @@ Metric for Comparing Clusterings", Ding Zhou, Jia Li, Hongyuan Zha.
 
 Required packages
 ===========
+Python version >= 2.7
 - [cvxopt](http://cvxopt.org) 
 - [numpy](http://www.numpy.org)
 - [scipy](http://www.numpy.org)
