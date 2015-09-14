@@ -79,7 +79,7 @@ def categorical_clust_dist(clus_mat_A,clus_mat_B,method='even'):
 	x=sol['x'];
 	#print sol
 	x=np.array(x);
-	x=x.reshape((n,m))
+	x=x.reshape((n,m), order='F')
 	return {"dist":sol['primal objective'],"matching":x}
 
 
