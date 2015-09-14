@@ -61,13 +61,13 @@ def categorical_clust_dist(clus_mat_A,clus_mat_B,method='even'):
 	for k in xrange(n):
 		A[k][np.arange(k,n*m,n)]=1;
 	for k in xrange(m):
-		A[n+k][np.arange((k-1)*n,(k-1)*n+n)]=1;
+		A[n+k][np.arange(k*n,k*n+n)]=1;
 	A = A[:-1,:]
-	D = distance.cdist(np.transpose(clus_mat_A),np.transpose(clus_mat_B),'cityblock'); #Computes the city block or Manhattan distance 
-	f = np.reshape(D,(1,n*m));
-	b = np.concatenate((np.transpose(w_A),np.transpose(w_B)),axis=0)
+	D = distance.cdist(clus_mat_A.T,clus_mat_B.T,'cityblock'); #Computes the city block or Manhattan distance 
+	f = D.reshape((1,n*m));
+	b = np.concatenate((w_A.T,w_B.T),axis=0)
 	b = b[:-1]
-	c = matrix(np.transpose(f));
+	c = matrix(f.T);
 	beq = matrix(b);
 	Aeq = matrix(A);
 
@@ -79,19 +79,22 @@ def categorical_clust_dist(clus_mat_A,clus_mat_B,method='even'):
 	x=sol['x'];
 	#print sol
 	x=np.array(x);
-	x=x.reshape(n,m)
+	x=x.reshape((n,m))
 	return {"dist":sol['primal objective'],"matching":x}
 
 
 if __name__ == '__main__':
 	clus_mat_A = token_to_mat(read_tokens('cluster_resultsA.txt'))
 	clus_mat_B = token_to_mat(read_tokens('cluster_resultsB.txt'))
-	# print clus_mat_A,clus_mat_B
+	# print clus_mat_A, clus_mat_B
 	if clus_mat_A.shape[0]!=clus_mat_B.shape[0]:
 		print "number of instances in two clustering result are not the same!";
 		sys.exit(0)
-	result=categorical_clust_dist(clus_mat_A,clus_mat_B,method='even')
+	result=categorical_clust_dist(clus_mat_A,clus_mat_B,method='instance_count')
 	# result=categorical_clust_dist(clus_mat_A,clus_mat_A,method='even')
 	print result['dist']
 	print result['matching']
+
+
+
 
