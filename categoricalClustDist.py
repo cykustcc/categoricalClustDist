@@ -10,7 +10,7 @@ import csv
 import numpy as np
 import sys
 from scipy.spatial import distance
-from cvxopt import matrix, solvers
+from cvxopt import matrix, spmatrix, solvers
 
 def read_tokens(cluster_result_file):
 	"""read clustering result from csv file (only one record each row) to a list"""
@@ -74,7 +74,7 @@ def categorical_clust_dist(clus_mat_A,clus_mat_B,method='even'):
 	h = matrix(0,(m*n,1),'d')
 
 	solvers.options['show_progress'] = False
-	sol = solvers.lp(c,G,h,A=Aeq,b=beq);
+	sol = solvers.lp(c,G,h,A=Aeq,b=beq,solver='mosek');
 	x=sol['x'];
 	#print sol
 	x=np.array(x);
