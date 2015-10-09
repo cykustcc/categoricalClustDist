@@ -74,7 +74,10 @@ def categorical_clust_dist(clus_mat_A,clus_mat_B,method='even'):
 	h = matrix(0,(m*n,1),'d')
 
 	solvers.options['show_progress'] = False
-	sol = solvers.lp(c,G,h,A=Aeq,b=beq,solver='mosek');
+	# 
+	# if mosek is not installed, delete "solver='mosek"
+	# To config python, run 'python setup.py install' in '/mosek/7/tools/platform/osx64x86/python/2'.
+	sol = solvers.lp(c,G,h,A=Aeq,b=beq,solver='mosek'); 
 	x=sol['x'];
 	#print sol
 	x=np.array(x);
