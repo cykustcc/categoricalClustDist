@@ -11,6 +11,7 @@ import numpy as np
 import sys
 from scipy.spatial import distance
 from cvxopt import matrix, spmatrix, solvers
+import mosek
 
 def read_tokens(cluster_result_file):
 	"""read clustering result from csv file (only one record each row) to a list"""
@@ -77,6 +78,8 @@ def categorical_clust_dist(clus_mat_A,clus_mat_B,method='even'):
 	# 
 	# if mosek is not installed, delete "solver='mosek"
 	# To config python, run 'python setup.py install' in '/mosek/7/tools/platform/osx64x86/python/2'.
+	solvers.options['mosek'] = {mosek.iparam.log: 0}
+	solvers.options['MOSEK'] = {mosek.iparam.log: 0}
 	sol = solvers.lp(c,G,h,A=Aeq,b=beq,solver='mosek'); 
 	x=sol['x'];
 	#print sol
