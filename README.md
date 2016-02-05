@@ -5,7 +5,7 @@ CategoricalClustDist is a python tool to compute the difference between two clus
 Clustering result is read from files in the format like `cluster_resultsA.txt` and `cluster_resultsB.txt`.	
 
 More details please refer to Section 4.1 of "A New Mallows Distance Based
-Metric for Comparing Clusterings", Ding Zhou, Jia Li, Hongyuan Zha.
+Metric for Comparing Clusterings", Ding Zhou, Jia Li, Hongyuan Zha. ICML2005.
 
 Required packages
 ===========
